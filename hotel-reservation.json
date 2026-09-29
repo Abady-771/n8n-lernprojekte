@@ -1,0 +1,124 @@
+{
+  "name": "Hotel _Reservation",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Reservation",
+        "formDescription": "Please choose your room.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "your name",
+              "fieldType": "textarea"
+            },
+            {
+              "fieldLabel": "Choose your room",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "singel room"
+                  },
+                  {
+                    "option": "deluxe room"
+                  },
+                  {
+                    "option": "suite"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -256,
+        -96
+      ],
+      "id": "f382de85-093c-400a-b418-c008fc7a4bc7",
+      "name": "On form submission"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "REPLACE_WITH_AIRTABLE_BASE_ID",
+          "mode": "list",
+          "cachedResultName": "Meine Base"
+        },
+        "table": {
+          "__rl": true,
+          "value": "REPLACE_WITH_AIRTABLE_TABLE_ID",
+          "mode": "list",
+          "cachedResultName": "Meine Tabelle"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json['your name'] }}",
+            "Room": "={{ $json['Choose your room'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Room",
+              "displayName": "Room",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        144,
+        -240
+      ],
+      "id": "9c457773-ec6c-4ef4-89d6-582c20f37d49",
+      "name": "Create a record"
+    }
+  ],
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "tags": []
+}
